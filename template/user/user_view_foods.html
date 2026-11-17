@@ -1,0 +1,108 @@
+{% extends 'user/user_base.html' %}
+{% block content %}
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<style>
+    /* Dropdown styling */
+    .form-control {
+        color: #000; /* Set dropdown text color to black */
+        background-color: #f8f9fa;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 10px;
+        font-size: 16px;
+    }
+    .form-control option {
+        color: #000; /* Ensures options text is also black */
+    }
+    .form-control:focus {
+        border-color: #4CAF50;
+        box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+    }
+
+    /* Option icon styling */
+    .dropdown-item-icon {
+        margin-right: 10px;
+        color: #6c757d;
+        font-size: 18px;
+    }
+</style>
+
+<section class="ftco-menu mb-5 pb-5">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-7 heading-section text-center ftco-animate">
+                <span class="subheading">Discover</span>
+                <h2 class="mb-4">Our Products</h2>
+                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+            </div>
+        </div>
+
+        <!-- Dropdown Filter Section -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <form method="GET" action="/filter_food_user">
+                    <div class="form-group">
+                        <label for="advocateType" class="form-label">Filter by Food Type</label>
+                        <select class="form-control" id="advocate_type" name="category" onchange="this.form.submit()">
+                            <option value="">
+                                <i class="fas fa-utensils dropdown-item-icon"></i>All Types
+                            </option>
+                            <option value="Non-Veg" {% if selected_type == "Non-Veg" %}selected{% endif %}>
+                                <i class="fas fa-drumstick-bite dropdown-item-icon"></i>Non-Veg
+                            </option>
+                            <option value="Veg" {% if selected_type == "Veg" %}selected{% endif %}>
+                                <i class="fas fa-leaf dropdown-item-icon"></i>Veg
+                            </option>
+                            <option value="Drinks" {% if selected_type == "Drinks" %}selected{% endif %}>
+                                <i class="fas fa-coffee dropdown-item-icon"></i>Drinks
+                            </option>
+                            <option value="Desserts" {% if selected_type == "Desserts" %}selected{% endif %}>
+                                <i class="fas fa-ice-cream dropdown-item-icon"></i>Desserts
+                            </option>
+                            <option value="Soups" {% if selected_type == "Soups" %}selected{% endif %}>
+                                <i class="fas fa-hot-tub dropdown-item-icon"></i>Soups
+                            </option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Product Display Section -->
+        <div class="row d-md-flex">
+            <div class="col-lg-12 ftco-animate p-md-5">
+                <div class="row">
+                    <div class="col-md-12 d-flex align-items-center">
+                        <div class="tab-content ftco-animate" id="v-pills-tabContent">
+                            <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-1-tab">
+                                <div class="row">
+                                    {% for f in foods %}
+                                    <div class="col-md-4 text-center">
+                                        <div class="menu-wrap">
+                                            <a href="#" class="menu-img img mb-4" style="background-image: url(../static/media/{{f.food_image}});"></a>
+                                            <div class="text">
+                                                <h3><a href="#">{{f.name}}</a></h3>
+                                                <p>Fueling your study sessions, one bite at a time!Canteen cravings? We’ve got you covered!</p>
+                                                <p class="quantity">Quantity: <span>{{f.quantity}}</span></p>
+                                                <p class="price">Price: <span>{{f.price}}Rs/-</span></p>
+                                                <p><a href="/user_checkout_food?id={{f.id}}" class="btn btn-primary btn-outline-primary">Book</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+

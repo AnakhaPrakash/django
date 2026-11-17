@@ -1,0 +1,189 @@
+{% extends 'admin/admin_base.html' %}
+{% block content %}
+
+<style>
+    .container {
+        max-width: 1200px;
+    }
+
+    .card {
+        border-radius: 8px;
+        width: 100%;
+        margin-left: 200px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        border-bottom: 2px solid #001c3a;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 500;
+    }
+
+    .form-group label {
+        font-weight: 500;
+    }
+
+    .form-control {
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 1rem;
+    }
+
+    .btn {
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .row {
+        margin-bottom: 1.5rem;
+    }
+
+    .card-action {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="page-inner">
+        <div class="page-header">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="card" style="margin-top: 50px;">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="card-title mb-0">Add Canteen Staffs</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="univ-name">Staff Name</label>
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                id="univ-name"
+                                                name="name"
+                                                placeholder="Enter Canteen Staff Name"
+                                            />
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="contact">Contact</label>
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                id="contact"
+                                                name="contact"
+                                                placeholder="Enter Contact Number"
+                                            />
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="profile_picture">Profile Picture</label>
+                                            <input
+                                                type="file"
+                                                class="form-control"
+                                                id="profile_picture"
+                                                name="profile_picture"
+                                            />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input
+                                                type="email"
+                                                class="form-control"
+                                                id="email"
+                                                name="email"
+                                                placeholder="Enter Email ID"
+                                            />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password">Password</label>
+                                            <input
+                                                type="password"
+                                                class="form-control"
+                                                id="password"
+                                                name="password"
+                                                placeholder="Enter Password"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="margin-left: 220px;">
+                                    <button type="submit" class="btn btn-success">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if messages %}
+{% for m in messages %}
+<script>alert("{{m}}")</script>
+{% endfor %}
+{% endif %}
+
+<script>
+    function validateForm() {
+        const name = document.getElementById("univ-name").value.trim();
+        const contact = document.getElementById("contact").value.trim();
+        const profilePicture = document.getElementById("profile_picture").value;
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        // Regular expressions for basic validation
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const contactPattern = /^\d{10}$/;
+
+        if (!name) {
+            alert("Please enter the staff name.");
+            return false;
+        }
+        
+        if (!contactPattern.test(contact)) {
+            alert("Please enter a valid 10-digit contact number.");
+            return false;
+        }
+
+        if (!profilePicture) {
+            alert("Please upload a profile picture.");
+            return false;
+        }
+
+        if (!emailPattern.test(email)) {
+            alert("Please enter a valid email address.");
+            return false;
+        }
+
+        if (password.length < 6) {
+            alert("Password must be at least 6 characters long.");
+            return false;
+        }
+
+        return true; // Form passes all checks and can be submitted
+    }
+</script>
+
+{% endblock %}

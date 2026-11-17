@@ -1,0 +1,97 @@
+{% extends "user/user_base.html" %}
+{% block content %}
+
+<style>
+    /* Container styling */
+    .table-container {
+        width: 100%;
+        max-width: 800px;
+        margin-top: 200px;
+        margin-left: 400px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Table styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+        font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    /* Badge styling */
+    .badge {
+        display: inline-block;
+        padding: 5px 10px;
+        font-size: 12px;
+        font-weight: bold;
+        border-radius: 4px;
+        color: white;
+    }
+
+    .badge-success {
+        background-color: #28a745;
+    }
+
+    .badge-danger {
+        background-color: #dc3545;
+    }
+</style>
+
+<div class="table-container">
+    <table>
+        <tr>
+            <th>Table Number</th>
+            <th>Time</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        {% for t in tables %}
+        <tr>
+            <td>{{t.table_no}}</td>
+            <td>{{t.time_from}} to {{t.time_to}}</td>
+            <td>{{t.added_on}}</td>
+            <td>
+                <span class="badge {% if t.booking_status %}badge-success{% else %}badge-danger{% endif %}">
+                  {% if t.booking_status %}
+                    Booked
+                  {% else %}
+                    Not Booked
+                  {% endif %}
+                </span>
+            </td>
+            <td>
+                <span>
+                  {% if t.booking_status %}
+                  booked
+                  {% else %}
+                    <a href="/user_booking_table?id={{t.id}}"><button class="btn badge-success">Book Now</button></a>
+                  {% endif %}
+                </span>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

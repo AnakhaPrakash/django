@@ -1,0 +1,106 @@
+{% extends 'staff/staff_base.html' %}
+{% block content %}
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <strong>Add Foods</strong>
+        </div>
+        <div class="card-body card-block">
+            <form method="post" enctype="multipart/form-data" class="form-horizontal" id="addTableForm" onsubmit="return validateForm()">
+                {% csrf_token %}
+
+                <!-- Table Number -->
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="table_no" class="form-control-label">Table Number</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="table_no" name="table_no" placeholder="Enter Table Number" class="form-control">
+                    </div>
+                </div>
+
+                <!-- Time From -->
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="time_from" class="form-control-label">Time From</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="time" id="time_from" name="time_from" class="form-control">
+                    </div>
+                </div>
+
+                <!-- Time To -->
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="time_to" class="form-control-label">Time To</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="time" id="time_to" name="time_to" class="form-control">
+                    </div>
+                </div>
+
+                <!-- Date -->
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="added_on" class="form-control-label">Date</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="date" id="added_on" name="added_on" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-outline-info">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if messages %}
+    {% for m in messages %}
+    <script>alert("{{m}}")</script>
+    {% endfor %}
+{% endif %}
+
+<script>
+    function validateForm() {
+        let tableNo = document.getElementById("table_no").value;
+        let timeFrom = document.getElementById("time_from").value;
+        let timeTo = document.getElementById("time_to").value;
+        let addedOn = document.getElementById("added_on").value;
+
+        if (tableNo.trim() === "") {
+            alert("Please enter the table number.");
+            return false;
+        }
+
+        if (timeFrom === "") {
+            alert("Please select a start time.");
+            return false;
+        }
+
+        if (timeTo === "") {
+            alert("Please select an end time.");
+            return false;
+        }
+
+        if (addedOn === "") {
+            alert("Please select a date.");
+            return false;
+        }
+
+        // Ensure the start time is before the end time
+        if (timeFrom >= timeTo) {
+            alert("The start time must be earlier than the end time.");
+            return false;
+        }
+
+        return true; // Allow form submission if all checks pass
+    }
+</script>
+
+{% endblock %}

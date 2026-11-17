@@ -1,7 +1,7 @@
 {% extends 'common_base.html' %}
 {% block content %}
 <section class="home-slider owl-carousel">
-    <div class="slider-item" style="background-image: url(images/bg_3.jpg);" data-stellar-background-ratio="0.5">
+    <div class="slider-item" style="background-image: url(../static/images/image_3.jpg);" data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
         <div class="container">
             <div class="row slider-text justify-content-center align-items-center">
@@ -15,8 +15,9 @@
     </div>
 </section>
 
-<section class="ftco-section contact-section" id="user_login">
-    <div class="container mt-5">
+<section class="ftco-section contact-section" id="user_login" style="background-color: whitesmoke;">
+    <!-- <h2 class="mb-3 mt-5 bread" style="text-decoration-color: brown;"text-center>Login</h2> -->
+    <div class="container mt-5"style="background-color:black;" >
         <div class="row justify-content-center">
             <div class="col-md-6 ftco-animate">
                 <form method="post" enctype="multipart/form-data" class="contact-form">
@@ -35,4 +36,11 @@
         </div>
     </div>
 </section>
+
+{% if messages %}
+{% for m in messages %}
+<script>alert("{{m}}")</script>
+{% endfor %}
+{% endif %}
+
 {% endblock %}

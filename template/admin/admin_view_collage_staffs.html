@@ -1,0 +1,87 @@
+{% extends 'admin/admin_base.html' %}
+{% block content %}
+
+<style>
+  .card-header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 15px;
+  }
+  .card-title {
+    font-weight: bold;
+    margin: 0;
+  }
+  .table-head-bg-primary thead th {
+    background-color: #006dda;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+  }
+  .table td {
+    background-color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6;
+  }
+  .table tbody tr:hover {
+    background-color: #e9ecef;
+  }
+  .profile-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .profile-cell img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+</style>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Collage Staff</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-head-bg-primary">
+            <thead>
+              <tr>
+                <th scope="col">Name & Profile</th>
+                <th scope="col">Contact</th>
+                <th scope="col">Email</th>
+                <th scope="col" colspan="2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for s in collage_staffs %}
+              <tr>
+                <td class="profile-cell">
+                  <img src="../static/media/{{ s.profile_picture }}" alt="Profile Picture">
+                  {{ s.name }}
+                </td>
+                <td>{{ s.contact }}</td>
+                <td>{{ s.email }}</td>
+                <td>
+                  <a class="btn btn-primary" href="/admin_view_collage_staff_single?id={{ s.id }}">View</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if messages %}
+  {% for m in messages %}
+  <script>alert("{{ m }}")</script>
+  {% endfor %}
+{% endif %}
+
+{% endblock %}

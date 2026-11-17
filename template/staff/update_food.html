@@ -1,0 +1,100 @@
+{% extends 'staff/staff_base.html' %}
+{% block content %}
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <strong>Add Foods</strong>
+        </div>
+        <div class="card-body card-block">
+            <form method="post" enctype="multipart/form-data" class="form-horizontal">
+                {% csrf_token %}
+
+                <!-- Food Name -->
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="name" class="form-control-label">Food Name</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" id="name" name="name" value="{{food.name}}" placeholder="Enter Food Name" class="form-control">
+                    </div>
+                </div>
+
+                <!-- Price -->
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="price" class="form-control-label">Price</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="number" id="price" name="price" value="{{food.price}}" placeholder="Enter Price" class="form-control" step="0.01">
+                    </div>
+                </div>
+
+                <!-- Quantity -->
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="quantity" class="form-control-label">Quantity</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="number" id="quantity" name="quantity" value="{{food.quantity}}" placeholder="Enter Quantity" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="rating" class="form-control-label">Category</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <select class="form-select mb-3" name="category" id="rating">
+                            <option value="Non-Veg">Non-Veg</option>
+                            <option value="Veg">Veg</option>
+                            <option value="Drinks">Drinks</option>
+                            <option value="Desserts">Desserts</option>
+                            <option value="Soups">Soups</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Image -->
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="image" class="form-control-label">Image</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="file" id="image" name="food_image" class="form-control-file">
+                    </div>
+                </div>
+
+                <!-- Rating -->
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="rating" class="form-control-label">Rating</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <select class="form-select mb-3" name="rating" id="rating">
+                            <option value="1">⭐</option>
+                            <option value="2">⭐⭐</option>
+                            <option value="3">⭐⭐⭐</option>
+                            <option value="4">⭐⭐⭐⭐</option>
+                            <option value="5">⭐⭐⭐⭐⭐</option>
+                        </select>                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="row form-group">
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-outline-info">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if messages %}
+    {% for m in messages %}
+    <script>alert("{{m}}")</script>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}

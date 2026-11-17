@@ -1,7 +1,30 @@
 {% extends 'common_base.html' %}
 {% block content %}
+
+<style>
+    /* Style for the dropdown box */
+    #usertype {
+        background-color: #343a40; /* Dark background */
+        color: #f8f9fa; /* Light text */
+        border: 1px solid #6c757d; /* Optional: Border color */
+        padding: 8px; /* Adjust padding for better appearance */
+        border-radius: 4px; /* Rounded corners */
+    }
+
+    /* Change the text color for the dropdown options */
+    #usertype option {
+        color: #000; /* Black text for options */
+        background-color: #fff; /* Light background for options */
+    }
+
+    /* Optional: Hover effect for better UX */
+    #usertype:hover {
+        border-color: #ffc107; /* Yellow border on hover */
+    }
+</style>
+
 <section class="home-slider owl-carousel">
-    <div class="slider-item" style="background-image: url(images/bg_3.jpg);" data-stellar-background-ratio="0.5">
+    <div class="slider-item" style="background-image: url(../static/images/h2.jpg);" data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
         <div class="container">
             <div class="row slider-text justify-content-center align-items-center">
@@ -18,39 +41,39 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6 ftco-animate">
-                <form method="post" enctype="multipart/form-data" class="contact-form">
+                <form method="post" enctype="multipart/form-data" class="contact-form" id="registrationForm" onsubmit="return validateForm()">
                     {% csrf_token %}
                     <div class="form-group">
-                        <input type="text" name="name" class="form-control" placeholder="Your Name">
+                        <input type="text" name="name" class="form-control" placeholder="Your Name" id="name">
                     </div>
                     <div class="form-group">
-                        <input type="number" name="contact" class="form-control" placeholder="Your Number">
+                        <input type="text" name="contact" class="form-control" placeholder="Your Number" id="contact">
                     </div>
                     <div class="form-group">
-                        <textarea name="address" id="" cols="30" rows="7" class="form-control" placeholder="Address"></textarea>
+                        <textarea name="address" cols="30" rows="7" class="form-control" placeholder="Address" id="address"></textarea>
                     </div>
-                   
                     <div class="form-group">
                         <label for="usertype">User Type</label>
                         <select name="usertype" id="usertype" class="form-control">
+                            <option value="">Select User Type</option>
                             <option value="student">Student</option>
                             <option value="teacher">Teacher</option>
-                            <option value="staff">Staff</option>
+                            <option value="college_staff">College Staff</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="profile_picture">Profile Picture</label>
-                        <input type="file" name="profile_picture" class="form-control">
+                        <input type="file" name="profile_picture" class="form-control" id="profile_picture">
                     </div>
                     <div class="form-group">
-                        <label for="id_proof">ID Card (Picture)</label>
-                        <input type="file" name="id_card" class="form-control">
+                        <label for="id_card">ID Card (Picture)</label>
+                        <input type="file" name="id_card" class="form-control" id="id_card">
                     </div>
                     <div class="form-group">
-                        <input type="email" name="email" class="form-control" placeholder="Your Email">
+                        <input type="email" name="email" class="form-control" placeholder="Your Email" id="email">
                     </div>
                     <div class="form-group">
-                        <input type="password" name="password" class="form-control" placeholder="Password">
+                        <input type="password" name="password" class="form-control" placeholder="Password" id="password">
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Register" style="margin-left: 180px;" class="btn btn-primary py-3 px-5">
@@ -60,4 +83,69 @@
         </div>
     </div>
 </section>
+
+{% if messages %}
+{% for m in messages %}
+<script>alert("{{m}}")</script>
+{% endfor %}
+{% endif %}
+
+<script>
+    function validateForm() {
+        const name = document.getElementById("name").value.trim();
+        const contact = document.getElementById("contact").value.trim();
+        const address = document.getElementById("address").value.trim();
+        const usertype = document.getElementById("usertype").value;
+        const profilePicture = document.getElementById("profile_picture").value;
+        const idCard = document.getElementById("id_card").value;
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const contactPattern = /^\d{10}$/;
+
+        if (!name) {
+            alert("Please enter your name.");
+            return false;
+        }
+        
+        if (!contactPattern.test(contact)) {
+            alert("Please enter a valid contact number (exactly 10 digits).");
+            return false;
+        }
+
+        if (!address) {
+            alert("Please enter your address.");
+            return false;
+        }
+
+        if (!usertype) {
+            alert("Please select a user type.");
+            return false;
+        }
+
+        if (!profilePicture) {
+            alert("Please upload a profile picture.");
+            return false;
+        }
+
+        if (!idCard) {
+            alert("Please upload your ID card.");
+            return false;
+        }
+
+        if (!emailPattern.test(email)) {
+            alert("Please enter a valid email address.");
+            return false;
+        }
+
+        if (password.length < 6) {
+            alert("Please enter a password with at least 6 characters.");
+            return false;
+        }
+
+        return true; // Allow form submission if all checks pass
+    }
+</script>
+
 {% endblock %}
